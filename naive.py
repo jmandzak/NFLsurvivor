@@ -14,7 +14,9 @@ def solve(used, score, week, grid, final_teams):
     if week == 19:
         if score < MIN_SCORE:
             MIN_SCORE = score
-            final_teams = used
+            final_teams.clear()
+            for team in used:
+                final_teams.append(team)
         return
 
     # go through grid to look at spreads for the week
@@ -28,7 +30,7 @@ def solve(used, score, week, grid, final_teams):
             used.append(row[0])
 
             # make the recursive call
-            solve(used, score, week, grid, final_teams)
+            solve(used, score, week, grid, final_teams) == 1
 
             # remove the changes so you can continue the loop
             week -= 1
@@ -43,8 +45,10 @@ def main():
 
     final_teams = []
     solve(list(), 0, CURRENT_WEEK, list_version, final_teams)
-    print(f'minimum score = {MIN_SCORE}')
-    print(f'best picks = {x for x in final_teams}')
+    print(f'Average Spread = {MIN_SCORE / (19-CURRENT_WEEK)}')
+    print(f'Best Picks:')
+    for i in range(18-CURRENT_WEEK + 1):
+        print(f'  {i+CURRENT_WEEK}: {final_teams[i]}')
 
 
 if __name__ == '__main__':
